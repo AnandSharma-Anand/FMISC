@@ -144,7 +144,7 @@ class HomeScreen extends StatelessWidget {
                               ],
                             ),
                           ).marginOnly(top: 35),
-                          Center(child: CircleAvatar(backgroundColor: Colors.white, radius: 40, child: Icon(Icons.lock, size: 50, color: Colors.blue.shade900))),
+                          Center(child: CircleAvatar(backgroundColor: Colors.white, radius: 40, child: Icon(Icons.image_search, size: 50, color: Colors.blue.shade900))),
                         ],
                       ),],),
                   )

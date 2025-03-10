@@ -42,21 +42,25 @@ class RegisterController extends GetxController {
   Future<void> registerUser() async {
     if (formKey.currentState!.validate()) {
       try {
+        Get.dialog(Center(child: CircularProgressIndicator(color: appColor)), barrierDismissible: false);
         var dio = Dio();
+        Map<String,dynamic> map={
+          "StationID": selectedStation,
+          "FullName": fullNameController.value.text,
+          "MobileNo": mobileController.value.text,
+          "Email": emailController.value.text,
+          "Password": passwordController.value.text,
+          "IsActive": isActiveController.value.text,
+        };
+        print(map);
         var response = await dio.post(
           "https://pioneersparklellc.com/api/UserLoginAPI",
           options: Options(headers: {"Content-Type": "application/json"}),
-          data: dios.FormData.fromMap({
-            "StationID": selectedStation,
-            "FullName": fullNameController.value.text,
-            "MobileNo": mobileController.value.text,
-            "Email": emailController.value.text,
-            "Password": passwordController.value.text,
-            "IsActive": isActiveController.value.text,
-          }),
+          data: dios.FormData.fromMap(map),
         );
         print(response);
         if (response.statusCode == 200) {
+          Get.back();
           showDialog(
             context: Get.overlayContext!,
             builder:
@@ -75,12 +79,39 @@ class RegisterController extends GetxController {
                   ],
                 ),
           );
-         // showLongToast("Registration Successful!");
+          // showLongToast("Registration Successful!");
         } else {
+          Get.back();
           showLongToast("Registration Failed!");
+        }
+      } on DioException catch (e) {
+        Get.back(); // Close the loader pop-up
+
+        print(e.response!.statusCode);
+        print(e.response!.data);
+        if (e.response != null && e.response!.statusCode == 400) {
+          Map<String, dynamic> map = e.response!.data ?? {};
+          if (map.isNotEmpty) {
+            Map<String, dynamic> errorMap = map["errors"];
+            Iterable<String> i = errorMap.keys;
+            if (i.isNotEmpty) {
+              print(i.first);
+              if (errorMap[i.first].runtimeType == List<dynamic>) {
+                showLongToast(errorMap[i.first][0]);
+              } else {
+                showLongToast(errorMap[i.first].toString());
+              }
+              ;
+            }
+
+            //
+          }
+        } else {
+          showLongToast("There is some technical issue.\nTry again later! \n Status Code : ${e.response?.statusCode}");
         }
       } catch (e, str) {
         print(str);
+        Get.back();
         print("Error: $e");
       }
     }

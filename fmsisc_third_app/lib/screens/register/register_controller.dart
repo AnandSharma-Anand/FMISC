@@ -22,6 +22,7 @@ class RegisterController extends GetxController {
       var response = await Dio().get('https://pioneersparklellc.com/api/StationAPI');
       if (response.statusCode == 200) {
         Map<String, dynamic> responseMap = response.data;
+        print(responseMap);
         stations.value = responseMap["data"];
         if (stations.isNotEmpty) {
           selectedStation = stations.first['id'].toString();

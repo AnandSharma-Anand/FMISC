@@ -37,7 +37,7 @@ class HomeController extends GetxController {
       );
       var headers = {'Content-Type': 'application/json'};
       Map<String, dynamic> map = {
-        if (image.value.path.isNotEmpty) 'files': await dios.MultipartFile.fromFile(image.value.path, filename: image.value.path.split('/').last),
+        if (image.value.path.isNotEmpty) 'WorkImage': await dios.MultipartFile.fromFile(image.value.path, filename: image.value.path.split('/').last),
         'UserID': loginModel!.value.id,
         'Title': titleTextController.value.text,
         'WorkDesc': suggestionTextController.value.text,

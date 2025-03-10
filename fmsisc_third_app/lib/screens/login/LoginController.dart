@@ -24,6 +24,7 @@ class LoginController extends GetxController {
     super.onInit();
     getLoginCredentials();
   }
+
   void loginApi() async {
     var connectivityResult = await Connectivity().checkConnectivity();
     if (connectivityResult == ConnectivityResult.none) {
@@ -31,10 +32,7 @@ class LoginController extends GetxController {
       return;
     }
 
-    Get.dialog(
-      Center(child: CircularProgressIndicator(color: appColor,)),
-      barrierDismissible: false,
-    );
+    Get.dialog(Center(child: CircularProgressIndicator(color: appColor)), barrierDismissible: false);
 
     var dio = Dio();
     String url = 'https://pioneersparklellc.com/api/UserLoginAPI?emailaddress=${emailController.value.text}&password=${passwordController.value.text}';
@@ -84,7 +82,6 @@ class LoginController extends GetxController {
       Get.back(); // Close the loader pop-up
     }
   }
-
 
   saveLoginCredentials() {
     PrefrenceManager.saveString("authEmail", emailController.value.text);

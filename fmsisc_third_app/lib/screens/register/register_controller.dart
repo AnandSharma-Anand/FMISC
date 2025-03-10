@@ -19,6 +19,8 @@ class RegisterController extends GetxController {
 
   Future<void> fetchStations() async {
     try {
+      Get.dialog(Center(child: CircularProgressIndicator(color: appColor)), barrierDismissible: false);
+
       var response = await Dio().get('https://pioneersparklellc.com/api/StationAPI');
       if (response.statusCode == 200) {
         Map<String, dynamic> responseMap = response.data;
@@ -27,8 +29,10 @@ class RegisterController extends GetxController {
         if (stations.isNotEmpty) {
           selectedStation = stations.first['id'].toString();
         }
+        Get.back();
       }
     } catch (e) {
+      Get.back();
       print("Error fetching stations: $e");
     }
   }

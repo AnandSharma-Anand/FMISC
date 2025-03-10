@@ -48,12 +48,14 @@ class HomeController extends GetxController {
       print(map);
       var dio = Dio();
       var response = await dio.request('https://pioneersparklellc.com/api/WorkImageAPI', options: Options(method: 'POST', headers: headers), data: data);
-
+      print(response.data);
       if (response.statusCode == 200) {
+
         Get.back();
         titleTextController.value.clear();
         suggestionTextController.value.clear();
         image.value = File("");
+        isTermConditionChecked.value=false;
         showLongToast("Form submitted successfully!");
       } else {
         Get.back();

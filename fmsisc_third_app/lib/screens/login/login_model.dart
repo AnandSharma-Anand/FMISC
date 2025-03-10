@@ -1,5 +1,5 @@
 class LoginModel {
-  int? id;
+  String? id;
   String? stationID;
   String? fullName;
   String? email;
@@ -17,7 +17,7 @@ class LoginModel {
         this.stationName});
 
   LoginModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
+    id = (json['userID']??"").toString();
     stationID = json['stationID'];
     fullName = json['fullName'];
     email = json['email'];
@@ -28,7 +28,7 @@ class LoginModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = this.id;
+    data['userID'] = this.id;
     data['stationID'] = this.stationID;
     data['fullName'] = this.fullName;
     data['email'] = this.email;

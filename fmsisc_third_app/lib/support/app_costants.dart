@@ -5,6 +5,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 String baseUrl="https://pioneersparklellc.com/api";
 Color appColor=const Color(0xFF0f4c9f);
@@ -20,4 +21,15 @@ void showLongToast(String message) {
     textColor: Colors.white,
     fontSize: 16.0,
   );
+}
+
+Future<void> launchInAppWebView(Uri url) async {
+  if (await canLaunchUrl(url)) {
+    await launchUrl(
+      url,
+      // mode: LaunchMode.e, // ✅ Opens in app
+    );
+  } else {
+    throw "Could not launch $url";
+  }
 }

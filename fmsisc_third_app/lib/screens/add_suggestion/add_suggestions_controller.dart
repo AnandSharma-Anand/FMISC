@@ -11,7 +11,7 @@ import 'package:get/get.dart';
 import '../../support/prefrence_manager.dart';
 import '../login/login_model.dart';
 
-class HomeController extends GetxController {
+class AddSuggestioController extends GetxController {
   Rx<LoginModel>? loginModel = LoginModel().obs;
 
   RxBool isTermConditionChecked = false.obs;
@@ -31,10 +31,7 @@ class HomeController extends GetxController {
 
   void uploadImage() async {
     try {
-      Get.dialog(
-        Center(child: CircularProgressIndicator(color: appColor,)),
-        barrierDismissible: false,
-      );
+      Get.dialog(Center(child: CircularProgressIndicator(color: appColor)), barrierDismissible: false);
       var headers = {'Content-Type': 'application/json'};
       Map<String, dynamic> map = {
         if (image.value.path.isNotEmpty) 'WorkImage': await dios.MultipartFile.fromFile(image.value.path, filename: image.value.path.split('/').last),
@@ -50,12 +47,11 @@ class HomeController extends GetxController {
       var response = await dio.request('https://pioneersparklellc.com/api/WorkImageAPI', options: Options(method: 'POST', headers: headers), data: data);
       print(response.data);
       if (response.statusCode == 200) {
-
         Get.back();
         titleTextController.value.clear();
         suggestionTextController.value.clear();
         image.value = File("");
-        isTermConditionChecked.value=false;
+        isTermConditionChecked.value = false;
         showLongToast("Form submitted successfully!");
       } else {
         Get.back();

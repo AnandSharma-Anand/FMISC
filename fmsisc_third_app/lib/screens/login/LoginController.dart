@@ -3,12 +3,13 @@ import 'dart:convert';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:fmsisc_third_app/screens/homescreen.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
 import '../../support/app_costants.dart';
 import '../../support/prefrence_manager.dart';
-import '../Home/home_screen.dart';
+import '../add_suggestion/add_suggestion_screen.dart';
 
 class LoginController extends GetxController {
   RxBool obscurePassword = true.obs;

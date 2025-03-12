@@ -1,3 +1,4 @@
+import 'package:auto_height_grid_view/auto_height_grid_view.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -22,7 +23,8 @@ class _HomeScreenState extends State<HomeScreen> {
       "img": "https://fmisc.up.gov.in/images/Icons/Dailyrainfallbulletin.png",
       "title": "Daily Rainfall Bulletin",
       "onTap": () {
-        Get.to(WebViewScreen("https://pioneersparklellc.com/report/gmapreport", "Daily Rainfall Bulletin"));
+        requestStoragePermission();
+   //     Get.to(WebViewScreen("https://idup.gov.in/en/article/flood-bulletin-2022", "Daily Rainfall Bulletin"));
       },
     },
     {
@@ -30,8 +32,6 @@ class _HomeScreenState extends State<HomeScreen> {
       "title": "RTDAS",
       "onTap": () {
         launchInAppWebView(Uri.parse("https://pioneersparklellc.com/report/gmapreport"));
-        // Get.to(WebViewScreen("https://pioneersparklellc.com/report/gmapreport", "RTDAS"));
-
       },
     },
     {
@@ -45,7 +45,8 @@ class _HomeScreenState extends State<HomeScreen> {
       "img": "https://fmisc.up.gov.in/images/Icons/floodbulletindaily.png",
       "title": "Daily Flood Bulletin",
       "onTap": () {
-        Get.to(WebViewScreen("https://www.google.com/", "Daily Flood Bulletin"));
+        // requestPermissions();
+        Get.to(WebViewScreen("https://fmisc.up.gov.in/DailyFloodBulletin/iduplink.aspx", "Daily Flood Bulletin"));
       },
     },
     {
@@ -63,6 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
       },
     },
   ];
+
 
   List<Map<String, String>> ministorsList = [
     {"img": "https://fmisc.up.gov.in/images/headerimages/cm.jpg", "title": "Shree Yogi Adityanath\nHon'ble Chief Minister,\nUttar Pradesh"},
@@ -152,13 +154,14 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: GridView.count(
+                              child: AutoHeightGridView(
                                 crossAxisCount: 2,
                                 crossAxisSpacing: 10.0,
                                 mainAxisSpacing: 10.0,
                                 shrinkWrap: true,
                                 physics: const NeverScrollableScrollPhysics(),
-                                children: List.generate(ministorsList.length, (index) {
+                                itemCount: ministorsList.length,
+                                builder: (BuildContext context, int index) {
                                   return Container(
                                     decoration: BoxDecoration(
                                       border: Border.all(color: appColor, width: 2),
@@ -183,7 +186,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ],
                                     ),
                                   );
-                                }),
+                                },
                               ),
                             ),
                           ],

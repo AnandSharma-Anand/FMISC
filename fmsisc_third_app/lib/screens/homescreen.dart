@@ -60,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
       "img": "https://fmisc.up.gov.in/images/Icons/hydrometStatus.png",
       "title": "Suggestion Form",
       "onTap": () {
-        Get.to(AddSuggestionForm());
+        Get.to(FormScreen());
       },
     },
   ];

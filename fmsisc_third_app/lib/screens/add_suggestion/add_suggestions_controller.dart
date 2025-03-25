@@ -18,6 +18,7 @@ import 'package:dio/dio.dart' as dios;
 import 'package:get/get.dart';
 import '../../support/prefrence_manager.dart';
 import '../login/login_model.dart';
+import 'add_suggestion_screen.dart';
 
 class AddSuggestioController extends GetxController {
   Rx<LoginModel>? loginModel = LoginModel().obs;
@@ -158,7 +159,7 @@ class AddSuggestioController extends GetxController {
       String fileName = "${DateTime.now()}${listString.first}";
       Map<String, dynamic> map = {
         // if (image.value.path.isNotEmpty) 'WorkImage': await dios.MultipartFile.fromFile(image.value.path, filename: image.value.path.split('/').last),
-        if (image.value.path.isNotEmpty) 'WorkImage': await dios.MultipartFile.fromBytes(dataList, filename: '$fileName${listString.last}'),
+        if (image.value.path.isNotEmpty) 'WorkImage': await dios.MultipartFile.fromBytes(dataList, filename: '$fileName.${listString.last}'),
         'UserID': loginModel!.value.id,
         'Title': titleTextController.value.text,
         'WorkDesc': suggestionTextController.value.text,
@@ -183,7 +184,9 @@ class AddSuggestioController extends GetxController {
         print(response.statusMessage);
       }
     } on DioException catch (e) {
-      Get.back();
+      if (Get.isDialogOpen ?? true) {
+        Get.back();
+      }
       showLongToast("${e.response!.data?["message"]}");
       print("Server error: ${e.response!.data?["message"]}");
     } catch (e, str) {
@@ -191,6 +194,76 @@ class AddSuggestioController extends GetxController {
       print(e);
       print(str);
       showLongToast("Unexpected error: $e");
+    }
+  }
+
+  Future<void> uploadData({
+    required String title,
+    required String riverID,
+    required String districtId,
+    required String block,
+    required String village,
+    required String riverSide,
+    required String sangathanID,
+    required String circleID,
+    required String divisionID,
+  }) async {
+    var dio = Dio();
+
+    try {
+      Get.dialog(Center(child: CircularProgressIndicator(color: appColor)), barrierDismissible: false);
+
+      Position position = await _determinePosition();
+
+      // Uint8List dataList = await drawTextOnImage(image.value.readAsBytesSync(), position);
+
+      // Correct file upload format
+      Map<String, dynamic> as = {
+        'WorkImage': await dios.MultipartFile.fromFile(
+          image.value.path,
+          filename: 'Screenshot_20250323_203754.png', // Provide a valid filename
+        ),
+        'UserID': loginModel!.value.id,
+        'Title': title,
+        'DistrictID': districtId,
+        'Block': block,
+        "RiverName":riverID,
+        'Village': village,
+        'Elevation': '150', // Add Elevation
+        'Accuracy': '5.5', // Add Accuracy
+        'RiverSide': riverSide, // Add RiverSide
+        'SangathanID': sangathanID,
+        'CircleID': circleID,
+        'DivisionID': divisionID,
+        'Latitude': position.latitude,
+        'Longitude': position.longitude,
+        'DateTime': DateTime.now().toIso8601String(),
+      };
+      var formData = dios.FormData.fromMap(as);
+      print("=====$as");
+      var response = await dio.post(
+        'https://pioneersparklellc.com/api/appphotoapi/paimgupload',
+        data: formData,
+        options: Options(
+          headers: {
+            'Content-Type': 'multipart/form-data', // ✅ Set the correct header
+            'Accept': 'application/json',
+          },
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        Get.back();
+        ScaffoldMessenger.of(Get.overlayContext!).showSnackBar(SnackBar(content: Text("Form submitted successfully!")));
+        Future.delayed(Duration(seconds: 1), () => Get.offAll(FormScreen()));
+      }
+    } on DioException catch (e) {
+      print("Exception: $e");
+      Get.back();
+      ScaffoldMessenger.of(Get.overlayContext!).showSnackBar(SnackBar(content: Text("Error : ${e.response!.data?["message"]}")));
+    } catch (e) {
+      Get.back();
+      print("Exception: $e");
     }
   }
 

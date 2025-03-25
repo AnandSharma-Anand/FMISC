@@ -157,26 +157,12 @@ class LoginScreen extends StatelessWidget {
                                 Align(
                                   alignment: Alignment.center,
                                   child: Text(
-                                    "Don't have an account?",
+                                    "Don't have an account? Contact admin.",
+                                    textAlign: TextAlign.center,
                                     style: TextStyle(color: Colors.black, fontSize: 17, fontWeight: FontWeight.w500),
-                                  ).marginSymmetric(vertical: 15),
+                                  ).marginOnly(top: 15),
                                 ),
-                                GestureDetector(
-                                  onTap: () {
-                                  Get.to(RegistrationScreen());
-                                  },
-                                  child: Container(
-                                    height: 50,
-                                    width: Get.width,
-                                    margin: EdgeInsets.only(bottom: 30),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8),
-                                      color: appColor,
-                                    ),
-                                    alignment: Alignment.center,
-                                    child: Text('Create an account', style: TextStyle(color: Colors.white, fontSize: 18)),
-                                  ),
-                                ),
+
                               ],
                             ),
                           ),

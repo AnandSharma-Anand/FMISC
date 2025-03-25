@@ -36,7 +36,8 @@ class LoginController extends GetxController {
     Get.dialog(Center(child: CircularProgressIndicator(color: appColor)), barrierDismissible: false);
 
     var dio = Dio();
-    String url = 'https://pioneersparklellc.com/api/UserLoginAPI?emailaddress=${emailController.value.text}&password=${passwordController.value.text}';
+    // String url = 'https://pioneersparklellc.com/api/UserLoginAPI?emailaddress=${emailController.value.text}&password=${passwordController.value.text}';
+    String url = 'https://pioneersparklellc.com/api/appuserapi/palogin?userid=${emailController.value.text}&password=${passwordController.value.text}';
     print(url);
 
     try {
@@ -57,7 +58,8 @@ class LoginController extends GetxController {
             PrefrenceManager.saveLoginData(map["data"]);
 
             PrefrenceManager.getLoginData().then((value) {
-              Get.offAll(HomeScreen());
+              // Get.offAll(HomeScreen());
+              Get.offAll(FormScreen());
             });
           } else {
             showLongToast(map["message"]);

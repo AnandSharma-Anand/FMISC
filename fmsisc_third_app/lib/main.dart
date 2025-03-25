@@ -45,9 +45,9 @@ class _SplashScreenState extends State<SplashScreen> {
       PrefrenceManager.getLoginData().then((value) {
         LoginModel? loginModel = value;
         if (loginModel != null) {
-          Future.delayed(const Duration(seconds: 3), () => Get.offAll(HomeScreen()));
+          Future.delayed(const Duration(seconds: 5), () => Get.offAll(FormScreen()));
         } else {
-          Future.delayed(const Duration(seconds: 3), () => Get.offAll(LoginScreen()));
+          Future.delayed(const Duration(seconds: 5), () => Get.offAll(LoginScreen()));
         }
       });
     });

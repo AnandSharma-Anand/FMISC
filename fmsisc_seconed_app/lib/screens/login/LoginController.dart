@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:untitled1/screens/Home/home_screen.dart';
+import 'package:untitled1/screens/addfloodInformtaion/add_flood_screen.dart';
 import 'package:untitled1/screens/login/login_model.dart';
 import 'package:untitled1/support/app_costants.dart';
 import 'package:untitled1/support/prefrence_manager.dart';
@@ -35,7 +36,8 @@ class LoginController extends GetxController {
 
     var dio = Dio();
     var response = await dio.request(
-      '$baseUrl/UserLoginAPI?emailAddress=${emailController.value.text}&password=${passwordController.value.text}',
+      // https://pioneersparklellc.com/api/appuserapi/login?userid=user1@gmail.com&password=user
+      '$baseUrl/appuserapi/login?userid=${emailController.value.text}&password=${passwordController.value.text}',
       options: Options(method: 'GET'),
     );
     if (response.statusCode == 200) {
@@ -49,7 +51,8 @@ class LoginController extends GetxController {
         PrefrenceManager.saveLoginData(map);
 
         PrefrenceManager.getLoginData().then((value) {
-          Get.offAll(HomeScreen());
+          // Get.offAll(HomeScreen());
+          Get.offAll(AddFloodScreen());
         });
       } else {
         showLongToast("Invalid email or password");

@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fmsisc_third_app/screens/login/login_screen.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../support/app_costants.dart';
 import '../../support/prefrence_manager.dart';
@@ -24,7 +28,7 @@ class AddSuggestionForm extends StatelessWidget {
           child: SafeArea(
             child: Container(
               width: double.infinity,
-              decoration: BoxDecoration(gradient: linearGradient),
+              // decoration: BoxDecoration(gradient: linearGradient),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -177,12 +181,16 @@ class AddSuggestionForm extends StatelessWidget {
         children: [
           IconButton(
             onPressed: () {
-              Get.back();
-              Get.delete<AddSuggestioController>();
+              print("Edit Clicked");
+              // TODO: Navigate to edit screen
+              PrefrenceManager.clearPreferences();
+              Get.offAll(LoginScreen());
+              // Get.back();
+              // Get.delete<AddSuggestioController>();
             },
             icon: Icon(Icons.arrow_back, color: Colors.white),
           ),
-          Text("Suggestion Form", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white)),
+          Text("Upload Flood Work Photo", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white)),
           Spacer(),
         ],
       ),
@@ -326,7 +334,7 @@ class _FormScreenState extends State<FormScreen> {
           child: SafeArea(
             child: Container(
               width: double.infinity,
-              decoration: BoxDecoration(gradient: linearGradient),
+              decoration: BoxDecoration(gradient: newLinearGradient),
               child: Column(
                 children: [
                   commonAppbar(),
@@ -387,8 +395,8 @@ class _FormScreenState extends State<FormScreen> {
                             }),
                             SizedBox(height: 10),
                             buildTextField("Title", titleController),
-                            Text("Upload Image:", style: TextStyle(fontWeight: FontWeight.bold)),
-                            SizedBox(height: 5),
+                            // Text("", style: TextStyle(fontWeight: FontWeight.bold)),
+                            SizedBox(height: 10),
                             Row(
                               children: [
                                 Expanded(
@@ -404,7 +412,7 @@ class _FormScreenState extends State<FormScreen> {
                                       ),
                                     ),
                                     child: Obx(
-                                      () => Text(homeController.image.value.path.trim().isEmpty ? "Take a photo" : "Re-take Photo", style: TextStyle(color: Colors.white)),
+                                      () => Image.file(homeController.image.value,height: 100,width: 100,)),
                                     ),
                                   ),
                                 ),
@@ -420,6 +428,37 @@ class _FormScreenState extends State<FormScreen> {
                                 ),
                               ],
                             ),
+
+/*
+                            Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                                  child: InkWell(
+                                    splashColor: Colors.transparent,
+                                    onTap: () {
+                                      _pickImageFromCamera();
+                                    },
+                                    child: Container(
+                                      height: 70,
+                                      width: 100,
+                                      decoration: BoxDecoration(color: appColor, border: Border.all(width: 10)),
+                                      margin: const EdgeInsets.all(15),
+                                      child: const Icon(Icons.camera_alt_outlined, size: 35, color: Colors.white),
+                                    ),
+                                  ),
+                                ),
+                                _imageFile != null
+                                    ? Image.file(_imageFile!, width: 115, height: 115, fit: BoxFit.contain)
+                                    : Text(
+                                  "Upload Image".capitalize.toString(),
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black),
+                                ),
+                              ],
+                            ),
+*/
+
                             SizedBox(height: 20),
 
                             GestureDetector(
@@ -491,12 +530,12 @@ class _FormScreenState extends State<FormScreen> {
         children: [
           IconButton(
             onPressed: () {
-              Get.back();
-              Get.delete<AddSuggestioController>();
+              PrefrenceManager.clearPreferences();
+              Get.offAll(LoginScreen());
             },
             icon: Icon(Icons.arrow_back, color: Colors.white),
           ),
-          Text("Suggestion Form", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white)),
+          Text("Upload Flood Work Photo", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white)),
           Spacer(),
 
           /// 🔹 **Popup Menu**
@@ -514,5 +553,18 @@ class _FormScreenState extends State<FormScreen> {
         ],
       ),
     );
+  }
+
+
+  File? _imageFile;
+
+  Future<void> _pickImageFromCamera() async {
+    ImagePicker _picker = ImagePicker();
+    final XFile? pickedFile = await _picker.pickImage(source: ImageSource.camera);
+    if (pickedFile != null) {
+      setState(() {
+        _imageFile = File(pickedFile.path);
+      });
+    }
   }
 }

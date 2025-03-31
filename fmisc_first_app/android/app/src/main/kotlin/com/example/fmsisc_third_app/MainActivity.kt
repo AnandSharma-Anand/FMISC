@@ -1,4 +1,4 @@
-package com.example.fmsisc_third_app
+package com.example.fmsisc_first_app
 
 import io.flutter.embedding.android.FlutterActivity
 

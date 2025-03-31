@@ -6,7 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:dio/dio.dart' as dios;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fmsisc_third_app/screens/webview_screen.dart';
+import 'package:fmsisc_first_app/screens/webview_screen.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -69,11 +69,13 @@ class _HomeScreenState extends State<HomeScreen> {
     },
   ];
 
+  // Image.asset("assets/logo.png", height: 50,),
+
   List<Map<String, String>> ministorsList = [
-    {"img": "https://fmisc.up.gov.in/images/headerimages/cm.jpg", "title": "Shree Yogi Adityanath\nHon'ble Chief Minister,\nUttar Pradesh"},
-    {"img": "https://fmisc.up.gov.in/images/headerimages/Swatantra.jpg", "title": "Shri Swatantra Dev Singh\nHon'ble Cabinet Minister,\nJal Shakti, Uttar Pradesh"},
-    {"img": "https://fmisc.up.gov.in/images/headerimages/DineshKhateek.jpg", "title": "Shri Dinesh Khateek\nHon'ble  Minister of State,\nJal Shakti, Uttar Pradesh"},
-    {"img": "https://fmisc.up.gov.in/images/headerimages/Ramkesh.jpg", "title": "Shri Ramkesh Nishad\nHon'ble  Minister of State,\nJal Shakti, Uttar Pradesh"},
+    {"img": "assets/5.png", "title": "Shri Yogi Adityanath\nHon'ble Chief Minister,\nUttar Pradesh"},
+    {"img": "assets/6.png", "title": "Shri Swatantra Dev Singh\nHon'ble Cabinet Minister,\nJal Shakti, Uttar Pradesh"},
+    {"img": "assets/7.png", "title": "Shri Dinesh Khateek\nHon'ble  Minister of State,\nJal Shakti, Uttar Pradesh"},
+    {"img": "assets/8.png", "title": "Shri Ramkesh Nishad\nHon'ble  Minister of State,\nJal Shakti, Uttar Pradesh"},
   ];
 
   @override

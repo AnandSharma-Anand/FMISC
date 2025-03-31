@@ -2,7 +2,7 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
-        android:label="FMISC"
+        android:label="FMISC-UP Flood Information"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

@@ -54,6 +54,11 @@ LinearGradient linearGradient = LinearGradient(
   begin: Alignment.topCenter,
   end: Alignment.bottomCenter,
 );
+LinearGradient newLinearGradient = LinearGradient(
+  colors: [Colors.white, Colors.white, Colors.white, Colors.white],
+  begin: Alignment.topCenter,
+  end: Alignment.bottomCenter,
+);
 
 void showLongToast(String message) {
   Fluttertoast.showToast(

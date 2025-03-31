@@ -16,7 +16,7 @@
     <application
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
-        android:label="fmsisc_first_app">
+        android:label="FMISC-UP">
         <activity
             android:name=".MainActivity"
             android:allowBackup="true"

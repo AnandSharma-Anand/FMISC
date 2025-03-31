@@ -38,6 +38,8 @@ class AddSuggestioController extends GetxController {
     }
   }
 
+
+
   Future<Position> _determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;

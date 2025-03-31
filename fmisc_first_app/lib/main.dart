@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:fmsisc_third_app/screens/homescreen.dart';
-import 'package:fmsisc_third_app/support/app_costants.dart';
+import 'package:fmsisc_first_app/screens/homescreen.dart';
+import 'package:fmsisc_first_app/support/app_costants.dart';
 import 'package:get/get.dart';
 
 void main() {

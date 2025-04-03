@@ -18,7 +18,6 @@ class AddFloodController extends GetxController {
     super.onInit();
     PrefrenceManager.getLoginData().then((value) {
       loginModel!.value = value!;
-      print("test")
       print(value.runtimeType);
     });
   }

@@ -207,26 +207,23 @@ class _HomeScreenState extends State<HomeScreen> {
                                 itemCount: ministorsList.length,
                                 builder: (BuildContext context, int index) {
                                   return Container(
-                                    decoration: BoxDecoration(
-                                      border: Border.all(color: appColor, width: 2),
-                                      gradient: LinearGradient(colors: [Colors.blue.shade400, Colors.blue.shade50], begin: Alignment.topCenter, end: Alignment.bottomCenter),
-                                      borderRadius: BorderRadius.only(topLeft: Radius.circular(15), bottomRight: Radius.circular(15)),
-                                    ),
+                                    // decoration: BoxDecoration(
+                                    //   border: Border.all(color: appColor, width: 2),
+                                    //   gradient: LinearGradient(colors: [Colors.blue.shade400, Colors.blue.shade50], begin: Alignment.topCenter, end: Alignment.bottomCenter),
+                                    //   borderRadius: BorderRadius.only(topLeft: Radius.circular(15), bottomRight: Radius.circular(15)),
+                                    // ),
                                     child: Column(
                                       children: [
                                         Padding(
-                                          padding: const EdgeInsets.all(10.0),
-                                          child: CachedNetworkImage(
-                                            imageUrl: ministorsList[index]['img']!,
-                                            height: 100,
-                                            width: 100,
-                                            imageBuilder:
-                                                (context, imageProvider) => Container(decoration: BoxDecoration(image: DecorationImage(image: imageProvider, fit: BoxFit.cover))),
-                                            placeholder: (context, url) => const CircularProgressIndicator(),
-                                            errorWidget: (context, url, error) => const Icon(Icons.error),
-                                          ),
+                                          padding: const EdgeInsets.all(0.0),
+                                          child: Image.asset(
+                                  ministorsList[index]['img']!, // Access the asset path
+                                    fit: BoxFit.cover,
+                                    height: 160,
+                                    width: 180,
+                                  ),
                                         ),
-                                        Text(ministorsList[index]['title']!, textAlign: TextAlign.center,maxLines: 3,),
+                                        // Text(ministorsList[index]['title']!, textAlign: TextAlign.center,maxLines: 3,),
                                       ],
                                     ),
                                   );

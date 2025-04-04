@@ -62,8 +62,9 @@ class _SuggestionFormState extends State<SuggestionForm> {
                       key: _suggestionformKey,
                       child: Column(
                         children: [
-                          getTextField(txtController: _suggestionController, hint: "Write your suggestion here....", showLabel: false),
                           getTextField(txtController: _subjectController, icon: Icons.subject, hint: "Subject"),
+
+                          getTextField(txtController: _suggestionController, hint: "Write your suggestion here....", showLabel: false),
                         ],
                       ),
                     ),
@@ -79,7 +80,7 @@ class _SuggestionFormState extends State<SuggestionForm> {
                             child: Container(
                               height: 70,
                               width: 100,
-                              decoration: BoxDecoration(color: appColor, border: Border.all(width: 10)),
+                              decoration: BoxDecoration(color: appColor, border: Border.all(width: 1)),
                               margin: const EdgeInsets.all(15),
                               child: const Icon(Icons.camera_alt_outlined, size: 35, color: Colors.white),
                             ),
@@ -341,7 +342,7 @@ class _SuggestionFormState extends State<SuggestionForm> {
   );
 
   showToast({String? message}) {
-    Get.snackbar("Error", message!, backgroundColor: Colors.white);
+    Get.snackbar("Message", message!, backgroundColor: Colors.white);
   }
 
   Future<void> submitSuggestion() async {
@@ -357,7 +358,7 @@ class _SuggestionFormState extends State<SuggestionForm> {
     if (_imageFile != null) {
       request.files.add(
         await http.MultipartFile.fromPath(
-          'file', // Adjust parameter name if needed
+          'WorkImage', // Adjust parameter name if needed
           _imageFile!.path,
         ),
       );

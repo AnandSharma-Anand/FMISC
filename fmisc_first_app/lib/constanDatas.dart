@@ -6,23 +6,31 @@ import 'package:get/get.dart';
 Color appColor=const Color(0xFF0f4c9f);
 
 
-Widget commonAppbar(){
+Widget commonAppbar() {
   return Container(
     color: appColor,
     width: Get.width,
     padding: const EdgeInsets.all(10),
     child: Row(
       children: [
-        Image.asset("assets/logo.png", height: 50,),
-        Spacer(),
-        FittedBox(
-          child: Text(
-            "FMISC Application".toUpperCase(),
-            textAlign: TextAlign.center,
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 30, color: Colors.white),
-          ),
+        Container(
+          // padding: ,
+          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(3)),
+          child: Image.asset("assets/logo.png", height: 40).marginAll(3),
+        ).marginOnly(right: 20),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(children: [Text("FMISC APPLICATION", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white)).marginOnly(top: 5)]),
+          ],
         ),
         Spacer(),
+        /* IconButton(
+            onPressed: () {
+            },
+            icon: Icon(Icons.logout, color: Colors.white),
+          ),*/
       ],
     ),
   );

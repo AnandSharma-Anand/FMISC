@@ -86,8 +86,8 @@ class AddSuggestioController extends GetxController {
 
       var data = dios.FormData.fromMap(map);
       print(map);
-      var dio = Dio();
-      var response = await dio.request('https://pioneersparklellc.com/api/WorkImageAPI', options: Options(method: 'POST', headers: headers), data: data);
+      var dio = Dio();                        https://pioneersparklellc.com/api/appsuggapi/sappimageupload
+      var response = await dio.request('https://pioneersparklellc.com/api/appsuggapi/sappimageupload', options: Options(method: 'POST', headers: headers), data: data);
       print("aaaaaa${response.statusCode}");
       if (response.statusCode == 200) {
         Get.back();

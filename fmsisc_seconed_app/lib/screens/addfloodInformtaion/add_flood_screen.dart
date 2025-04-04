@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
+import 'package:untitled1/screens/addfloodInformtaion/unapproved_data.dart';
 
 import '../../support/app_costants.dart';
 import 'add_flood_controller.dart';
@@ -18,7 +19,7 @@ class AddFloodScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: appColor,
-        title: Text("Add Flood Information"),
+        title: Obx(() => Text("Station : ${addFloodController.loginModel!.value.data?.stationName ?? ''}")),
         titleTextStyle: TextStyle(color: Colors.white, fontSize: 22),
         iconTheme: IconThemeData(color: Colors.white),
       ),
@@ -41,11 +42,11 @@ class AddFloodScreen extends StatelessWidget {
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Gauge is required';
+                        return "Please enter gauge";
                       }
-                      if (double.tryParse(value) == null) {
-                        return 'Enter a valid number';
-                      }
+                      double? input = double.tryParse(value);
+                      if (input == null) return "Invalid number";
+                      if (input > addFloodController.maxFloodLevel.value) return "Gauge cannot exceed ${addFloodController.maxFloodLevel.value}";
                       return null;
                     },
                   ),
@@ -64,11 +65,11 @@ class AddFloodScreen extends StatelessWidget {
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Discharge is required';
+                        return "Please enter Discharge";
                       }
-                      if (int.tryParse(value) == null) {
-                        return 'Enter a valid number';
-                      }
+                      double? input = double.tryParse(value);
+                      if (input == null) return "Invalid number";
+                      if (input > addFloodController.maxDischarge.value) return "Discharge cannot exceed ${addFloodController.maxDischarge.value}";
                       return null;
                     },
                   ),
@@ -101,24 +102,26 @@ class AddFloodScreen extends StatelessWidget {
                       ),
                     ),
                     // Time Dropdown
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: DropdownButtonFormField<String>(
-                          value: addFloodController.timeController.value.text.isEmpty ? null : addFloodController.timeController.value.text,
-                          decoration: InputDecoration(
-                            labelText: 'Time',
-                            contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                            border: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey.shade400)),
+                    Obx(
+                      () => Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: DropdownButtonFormField<String>(
+                            value: addFloodController.timeController.value.text.isEmpty ? null : addFloodController.timeController.value.text,
+                            decoration: InputDecoration(
+                              labelText: 'Time',
+                              contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                              border: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey.shade400)),
+                            ),
+                            items:
+                                addFloodController.timeSlots.map((time) {
+                                  return DropdownMenuItem(value: time, child: Text(time));
+                                }).toList(),
+                            onChanged: (value) {
+                              addFloodController.timeController.value.text = value!;
+                            },
+                            validator: (value) => value == null ? 'Select a time' : null,
                           ),
-                          items:
-                              _generateTimeSlots().map((time) {
-                                return DropdownMenuItem(value: time, child: Text(time));
-                              }).toList(),
-                          onChanged: (value) {
-                            addFloodController.timeController.value.text = value!;
-                          },
-                          validator: (value) => value == null ? 'Select a time' : null,
                         ),
                       ),
                     ),
@@ -153,6 +156,38 @@ class AddFloodScreen extends StatelessWidget {
                   ),
                 ),
               ],
+            ),
+          ),
+          Obx(
+            () => FutureBuilder<List<UnapprovedData>>(
+              future: addFloodController.fetchUnapprovedData(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return (Get.isDialogOpen!)?SizedBox():Center(child: CircularProgressIndicator()); // Loading state
+                } else if (snapshot.hasError) {
+                  return Center(child: Text("Error: ${snapshot.error}")); // Error state
+                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  return Center(child: Text("No data available")); // Empty state
+                }
+
+                List<UnapprovedData> dataList = snapshot.data!;
+                return ListView.builder(
+                  itemCount: dataList.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    UnapprovedData data = dataList[index];
+                    return Card(
+                      margin: EdgeInsets.all(8.0),
+                      elevation: 3,
+                      child: ListTile(
+                        title: Text("Station: ${data.stationName}", style: TextStyle(fontWeight: FontWeight.bold)),
+                        subtitle: Text("Gauge: ${data.gauge}, Discharge: ${data.discharge}"),
+                        trailing: Text(data.dataTime),
+                      ),
+                    );
+                  },
+                );
+              },
             ),
           ),
         ],

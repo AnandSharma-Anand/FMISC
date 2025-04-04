@@ -40,15 +40,15 @@ class HomeScreen extends StatelessWidget {
                               () => Padding(
                                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8.0),
                                 child: Text(
-                                  homeController.loginModel!.value.role.toString() == "Contributor"
-                                      ? "Station : ${homeController.loginModel!.value.stationName.toString()}"
-                                      : "${(homeController.loginModel!.value.role ?? "").toString()} Dashboard",
+                                  homeController.loginModel!.value.data?.role.toString() == "Contributor"
+                                      ? "Station : ${homeController.loginModel!.value.data?.stationName.toString()}"
+                                      : "${(homeController.loginModel!.value.data?.role ?? "").toString()} Dashboard",
                                   style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),
                                 ),
                               ),
                             ),
                           ),
-                          (homeController.loginModel!.value.role ?? "").toString() != "Contributor" ? contributerMenu() : adminMenu(),
+                          (homeController.loginModel!.value.data?.role ?? "").toString() != "Contributor" ? contributerMenu() : adminMenu(),
                         ],
                       ),
                     ),
@@ -421,7 +421,7 @@ class HomeScreen extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      "FMISC ${(homeController.loginModel!.value.role ?? "").toString().capitalizeFirst.toString()}",
+                      "FMISC ${(homeController.loginModel!.value.data?.role).toString().capitalizeFirst.toString()}",
                       style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),
                     ).marginOnly(top: 5),
                   ],

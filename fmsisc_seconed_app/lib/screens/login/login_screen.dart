@@ -121,10 +121,11 @@ class LoginScreen extends StatelessWidget {
                                   ),
                                 ),
                                 Obx(
-                                  () =>CheckboxListTile(
+                                  () => CheckboxListTile(
                                     controlAffinity: ListTileControlAffinity.leading,
                                     contentPadding: EdgeInsets.symmetric(horizontal: 0),
-                                    visualDensity: VisualDensity(horizontal: -4, vertical: -4), // Reduces space
+                                    visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+                                    // Reduces space
                                     value: controller.isRemember.value,
                                     onChanged: (value) {
                                       controller.isRemember.value = !controller.isRemember.value;
@@ -163,37 +164,10 @@ class LoginScreen extends StatelessWidget {
                                 Align(
                                   alignment: Alignment.center,
                                   child: Text(
-                                    "Don't have an account?",
+                                    "Don't have an account? Contact to admin",
+                                    textAlign: TextAlign.center,
                                     style: TextStyle(color: Colors.black, fontSize: 17, fontWeight: FontWeight.w500),
                                   ).marginSymmetric(vertical: 15),
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    if (controller.formKey.currentState!.validate()) {
-                                      controller.loginApi();
-                                    }
-                                  },
-                                  child: Container(
-                                    height: 50,
-                                    width: Get.width,
-                                    margin: EdgeInsets.only(bottom: 30),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8),
-                                      color: appColor,
-                                      // gradient: LinearGradient(
-                                      //   colors: [
-                                      //     Colors.indigo.shade900,
-                                      //     Colors.indigo.shade900,
-                                      //     Colors.indigo.shade900,
-                                      //     Colors.black54,
-                                      //   ],
-                                      //   begin: Alignment.topCenter,
-                                      //   end: Alignment.bottomCenter,
-                                      // ),
-                                    ),
-                                    alignment: Alignment.center,
-                                    child: Text('Create an account', style: TextStyle(color: Colors.white, fontSize: 18)),
-                                  ),
                                 ),
                               ],
                             ),

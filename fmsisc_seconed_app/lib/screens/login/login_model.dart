@@ -1,38 +1,54 @@
 class LoginModel {
-  int? id;
+  bool? success;
+  Data? data;
+  String? message;
+
+  LoginModel({this.success, this.data, this.message});
+
+  LoginModel.fromJson(Map<String, dynamic> json) {
+    success = json['success'];
+    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    message = json['message'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['success'] = this.success;
+    if (this.data != null) {
+      data['data'] = this.data!.toJson();
+    }
+    data['message'] = this.message;
+    return data;
+  }
+}
+
+class Data {
+  String? userID;
   String? stationID;
   String? fullName;
-  String? email;
-  String? password;
   String? role;
   String? stationName;
 
-  LoginModel(
-      {this.id,
+  Data(
+      {this.userID,
         this.stationID,
         this.fullName,
-        this.email,
-        this.password,
         this.role,
         this.stationName});
 
-  LoginModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
+  Data.fromJson(Map<String, dynamic> json) {
+    userID = json['userID'];
     stationID = json['stationID'];
     fullName = json['fullName'];
-    email = json['email'];
-    password = json['password'];
     role = json['role'];
     stationName = json['stationName'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = this.id;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['userID'] = this.userID;
     data['stationID'] = this.stationID;
     data['fullName'] = this.fullName;
-    data['email'] = this.email;
-    data['password'] = this.password;
     data['role'] = this.role;
     data['stationName'] = this.stationName;
     return data;

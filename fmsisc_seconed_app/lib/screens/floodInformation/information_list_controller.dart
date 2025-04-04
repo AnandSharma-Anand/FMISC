@@ -21,7 +21,7 @@ class InformationListController extends GetxController {
   Future<List<InformationListModel>> fetchData() async {
     try {
       var dio = Dio();
-      dios.Response response = await dio.get("https://pioneersparklellc.com/api/FDataAPI?stationID=${loginModel!.value.stationID}");
+      dios.Response response = await dio.get("https://pioneersparklellc.com/api/FDataAPI?stationID=${loginModel!.value.data!.stationID}");
 
       if (response.statusCode == 200) {
         List<dynamic> data = response.data;

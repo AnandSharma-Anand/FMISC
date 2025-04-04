@@ -4,6 +4,7 @@ import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:untitled1/screens/Home/home_screen.dart';
+import 'package:untitled1/screens/addfloodInformtaion/add_flood_screen.dart';
 import 'package:untitled1/screens/login/login_model.dart';
 import 'package:untitled1/screens/login/login_screen.dart';
 import 'package:untitled1/support/app_costants.dart';
@@ -44,7 +45,7 @@ class _SplashScreenState extends State<SplashScreen> {
       PrefrenceManager.getLoginData().then((value) {
         LoginModel? loginModel = value;
         if (loginModel != null) {
-          Future.delayed(const Duration(seconds: 3), () => Get.offAll(HomeScreen()));
+          Future.delayed(const Duration(seconds: 3), () => Get.offAll(AddFloodScreen()));
         } else {
           Future.delayed(const Duration(seconds: 3), () => Get.offAll(LoginScreen()));
         }

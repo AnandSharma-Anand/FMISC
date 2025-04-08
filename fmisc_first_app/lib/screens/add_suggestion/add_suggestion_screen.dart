@@ -132,11 +132,11 @@ class _SuggestionFormState extends State<SuggestionForm> {
                       print(_imageFile);
                       print(_imageFile.runtimeType);
                       print((_imageFile == null));
-                      if (_imageFile == null) {
-                        showToast(message: "Kindly upload image.");
-                      } else {
+                      // if (_imageFilegeFile == null) {
+                      //   showToast(message: "Kindly upload image.");
+                      // } else {
                         submitSuggestion();
-                      }
+                      // }
                     }
                     // Get.back();
                   }

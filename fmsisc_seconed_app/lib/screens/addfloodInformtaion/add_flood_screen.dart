@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
 import 'package:untitled1/screens/addfloodInformtaion/unapproved_data.dart';
+import 'package:untitled1/support/prefrence_manager.dart';
 
 import '../../support/app_costants.dart';
 import 'add_flood_controller.dart';
@@ -19,9 +20,22 @@ class AddFloodScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: appColor,
-        title: Obx(() => Text("Station : ${addFloodController.loginModel!.value.data?.stationName ?? ''}")),
+        title: Obx(
+          () => Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [Text("Add Flood Information"), Text("Station : ${addFloodController.loginModel!.value.data?.stationName ?? ''}", style: TextStyle(fontSize: 14))],
+          ),
+        ),
         titleTextStyle: TextStyle(color: Colors.white, fontSize: 22),
         iconTheme: IconThemeData(color: Colors.white),
+        actions: [
+          IconButton(
+            onPressed: () {
+              PrefrenceManager.clearPreferences();
+            },
+            icon: Icon(Icons.logout),
+          ),
+        ],
       ),
       body: ListView(
         children: [
@@ -163,7 +177,7 @@ class AddFloodScreen extends StatelessWidget {
               future: addFloodController.fetchUnapprovedData(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return (Get.isDialogOpen!)?SizedBox():Center(child: CircularProgressIndicator()); // Loading state
+                  return (Get.isDialogOpen!) ? SizedBox() : Center(child: CircularProgressIndicator()); // Loading state
                 } else if (snapshot.hasError) {
                   return Center(child: Text("Error: ${snapshot.error}")); // Error state
                 } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
@@ -176,15 +190,79 @@ class AddFloodScreen extends StatelessWidget {
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
                     UnapprovedData data = dataList[index];
-                    return Card(
+                    return Container(
+                      width: Get.width,
+                      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            blurRadius: 6,
+                            offset: Offset(0, 3), // horizontal, vertical offset
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            width: Get.width,
+
+                            padding: EdgeInsets.symmetric(vertical: 2, horizontal: 10),
+                            decoration: BoxDecoration(color: appColor, borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10))),
+                            child: Text("Station: ${data.stationName}", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(padding: const EdgeInsets.all(8.0), child: Text("Gauge: ${data.gauge}")),
+                                    Padding(padding: const EdgeInsets.symmetric(horizontal: 8.0), child: Text("Discharge: ${data.discharge}")).marginOnly(bottom: 7),
+                                    Padding(padding: const EdgeInsets.symmetric(horizontal: 8.0), child: Text("Date & Time: ${data.dataTime}")).marginOnly(bottom: 7),
+                                  ],
+                                ),
+                              ),
+
+                              IconButton(
+                                onPressed: () {
+                                  addFloodController.onEdit(data);
+                                },
+                                icon: Icon(Icons.edit),
+                              ),
+                            ],
+                          ),
+
+                          Container(
+                            width: Get.width,
+                            decoration: BoxDecoration(
+                              color: bgColors[index % 3],
+                              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10)),
+                            ),
+                            alignment: Alignment.center,
+                            padding: EdgeInsets.all(3),
+                            child: Text("Below Warning Level", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+                          ),
+                        ],
+                      ),
+                    ); /*Card(
                       margin: EdgeInsets.all(8.0),
                       elevation: 3,
                       child: ListTile(
                         title: Text("Station: ${data.stationName}", style: TextStyle(fontWeight: FontWeight.bold)),
                         subtitle: Text("Gauge: ${data.gauge}, Discharge: ${data.discharge}"),
-                        trailing: Text(data.dataTime),
+                        trailing: InkWell(
+                          onTap: () {
+                            Get.offAll(AddFloodScreen(), arguments: data);
+                          },
+                          child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.end, children: [Icon(Icons.edit), Text(data.dataTime)]),
+                        ),
                       ),
-                    );
+                    );*/
                   },
                 );
               },
@@ -210,4 +288,6 @@ class AddFloodScreen extends StatelessWidget {
     }
     return timeSlots;
   }
+
+  final List<Color> bgColors = [Colors.red, Colors.orange, Colors.green];
 }

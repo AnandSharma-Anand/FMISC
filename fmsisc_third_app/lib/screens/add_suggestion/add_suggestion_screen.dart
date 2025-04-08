@@ -412,7 +412,7 @@ class _FormScreenState extends State<FormScreen> {
                                       ),
                                     ),
                                     child: Obx(
-                                      () => Image.file(homeController.image.value,height: 100,width: 100,)),
+                                      () => homeController.image.value.path.trim().isEmpty ?Text("Take Image"):Image.file(homeController.image.value, height: 100,width: 100),
                                     ),
                                   ),
                                 ),
@@ -501,6 +501,7 @@ class _FormScreenState extends State<FormScreen> {
   }
 
   void _submitForm() {
+    // return;
     if (_formKey.currentState!.validate()) {
       if (homeController.image.value.path.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please select a file")));
@@ -519,6 +520,7 @@ class _FormScreenState extends State<FormScreen> {
       );
     }
   }
+
 
   Widget commonAppbar() {
     return Container(

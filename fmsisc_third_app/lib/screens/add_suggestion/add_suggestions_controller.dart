@@ -38,8 +38,6 @@ class AddSuggestioController extends GetxController {
     }
   }
 
-
-
   Future<Position> _determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
@@ -229,7 +227,7 @@ class AddSuggestioController extends GetxController {
         'Title': title,
         'DistrictID': districtId,
         'Block': block,
-        "RiverName":riverID,
+        "RiverName": riverID,
         'Village': village,
         'Elevation': '150', // Add Elevation
         'Accuracy': '5.5', // Add Accuracy
@@ -255,9 +253,10 @@ class AddSuggestioController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        Get.back();
-        ScaffoldMessenger.of(Get.overlayContext!).showSnackBar(SnackBar(content: Text("Form submitted successfully!")));
-        Future.delayed(Duration(seconds: 1), () => Get.offAll(FormScreen()));
+        // Get.back();
+        showImageTextDialog(Get.overlayContext!);
+        // ScaffoldMessenger.of(Get.overlayContext!).showSnackBar(SnackBar(content: Text("Form submitted successfully!")));
+        // Future.delayed(Duration(seconds: 1), () => Get.offAll(FormScreen()));
       }
     } on DioException catch (e) {
       print("Exception: $e");
@@ -267,6 +266,36 @@ class AddSuggestioController extends GetxController {
       Get.back();
       print("Exception: $e");
     }
+  }
+
+  void showImageTextDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ClipRRect(borderRadius: BorderRadius.circular(12), child: mat.Image.file(image.value, height: 100, width: 100)),
+                const SizedBox(height: 16),
+                Text('Image has been upload successfully.', style: TextStyle(fontSize: 16), textAlign: TextAlign.center),
+                const SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    PrefrenceManager.clearPreferences();
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 
   @override

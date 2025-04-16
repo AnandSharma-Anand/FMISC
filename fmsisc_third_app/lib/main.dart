@@ -4,6 +4,7 @@ import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:fmsisc_third_app/screens/add_suggestion/add_suggestion_screen.dart';
 import 'package:fmsisc_third_app/screens/homescreen.dart';
+import 'package:fmsisc_third_app/screens/introduction_screen.dart';
 import 'package:fmsisc_third_app/screens/login/login_model.dart';
 import 'package:fmsisc_third_app/screens/login/login_screen.dart';
 import 'package:fmsisc_third_app/support/app_costants.dart';
@@ -47,7 +48,7 @@ class _SplashScreenState extends State<SplashScreen> {
         if (loginModel != null) {
           Future.delayed(const Duration(seconds: 5), () => Get.offAll(FormScreen()));
         } else {
-          Future.delayed(const Duration(seconds: 5), () => Get.offAll(LoginScreen()));
+          Future.delayed(const Duration(seconds: 5), () => Get.offAll(IntroScreen()));
         }
       });
     });

@@ -36,17 +36,12 @@ class AddFloodController extends GetxController {
       gaugeController.value.text = (data.gauge ?? "").toString();
       dischargeController.value.text = (data.discharge ?? "").toString();
       List<String> list = data.dataTime.split(" ");
-      // dateController.value.text = list.first;
-
-     int indexx= timeSlots.indexWhere((element) {
-       print(element);
-       print(list[list.length-2]+" "+list.last);
-       return  element == "${list[list.length-2]} ${list.last}";
-     });
-print(indexx);
-     if(indexx!=-1){
-       timeController.value.text = timeSlots[indexx];
-     }
+      int indexx = timeSlots.indexWhere((element) {
+        return element == "${list[list.length - 2]} ${list.last}";
+      });
+      if (indexx != -1) {
+        timeController.value.text = timeSlots[indexx];
+      }
     } catch (e, str) {}
   }
 

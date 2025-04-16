@@ -285,7 +285,8 @@ class _HomeScreenState extends State<HomeScreen> {
       var dio = Dio();
       dios.Response response = await dio.get('https://pioneersparklellc.com/api/AppUserAPI/WebView');
       Map<String, dynamic> jsonResponse = response.data;
-      jsonResponse["data"].add({"title": "Suggestion Form", "webURL": "", "imageURL": "https://fmisc.up.gov.in/images/Icons/hydrometStatus.png"});
+      // jsonResponse["data"].add({"title": "Suggestion", "webURL": "", "imageURL": "https://fmisc.up.gov.in/images/Icons/hydrometStatus.png"});
+      jsonResponse["data"].add({"title": "Suggestion", "webURL": "", "imageURL": "https://static.vecteezy.com/system/resources/previews/005/073/080/non_2x/suggestion-box-feedback-concept-illustration-flat-design-eps10-modern-graphic-element-for-landing-page-empty-state-ui-infographic-icon-vector.jpg"});
       ResponseModel responseModel = ResponseModel.fromJson(jsonResponse);
 
       return responseModel.data;

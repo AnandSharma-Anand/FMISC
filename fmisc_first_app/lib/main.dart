@@ -37,6 +37,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     // TODO: implement initState,
     super.initState();
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Future.delayed(const Duration(seconds: 5), () => Get.offAll(HomeScreen()));
     });

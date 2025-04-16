@@ -322,6 +322,13 @@ class _FormScreenState extends State<FormScreen> {
     ).marginOnly(top: 10);
   }
 
+  String? selectedDateOption;
+
+  final List<Map<String, String>> dateOptions = [
+    {"value": "Before Work", "label": "Before Work"},
+    {"value": "During Work", "label": "During Work"},
+    {"value": "After Work", "label": "After Work"},
+  ];
   AddSuggestioController homeController = Get.put(AddSuggestioController());
 
   @override
@@ -374,7 +381,7 @@ class _FormScreenState extends State<FormScreen> {
                             SizedBox(height: 10),
                             buildTextField("Block", blockController),
                             buildTextField("Village", villageController),
-                            buildDropdown('Sangathan Name', sangathans, selectedSangathan, (value) {
+                          /*  buildDropdown('Sangathan Name', sangathans, selectedSangathan, (value) {
                               setState(() {
                                 selectedSangathan = value;
                                 fetchCircles(selectedSangathan!);
@@ -392,10 +399,14 @@ class _FormScreenState extends State<FormScreen> {
                               setState(() {
                                 selectedDivision = value;
                               });
-                            }),
+                            }),*/
                             SizedBox(height: 10),
-                            buildTextField("Title", titleController),
-                            // Text("", style: TextStyle(fontWeight: FontWeight.bold)),
+                            buildTextField("Work Name", titleController),
+                            buildDropdown('Date Option', dateOptions, selectedDateOption, (value) {
+                              setState(() {
+                                selectedDateOption = value;
+                              });
+                            }),
                             SizedBox(height: 10),
                             Row(
                               children: [
@@ -428,37 +439,6 @@ class _FormScreenState extends State<FormScreen> {
                                 ),
                               ],
                             ),
-
-/*
-                            Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                                  child: InkWell(
-                                    splashColor: Colors.transparent,
-                                    onTap: () {
-                                      _pickImageFromCamera();
-                                    },
-                                    child: Container(
-                                      height: 70,
-                                      width: 100,
-                                      decoration: BoxDecoration(color: appColor, border: Border.all(width: 10)),
-                                      margin: const EdgeInsets.all(15),
-                                      child: const Icon(Icons.camera_alt_outlined, size: 35, color: Colors.white),
-                                    ),
-                                  ),
-                                ),
-                                _imageFile != null
-                                    ? Image.file(_imageFile!, width: 115, height: 115, fit: BoxFit.contain)
-                                    : Text(
-                                  "Upload Image".capitalize.toString(),
-                                  textAlign: TextAlign.center,
-                                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black),
-                                ),
-                              ],
-                            ),
-*/
-
                             SizedBox(height: 20),
 
                             GestureDetector(
@@ -514,9 +494,10 @@ class _FormScreenState extends State<FormScreen> {
         block: blockController.text,
         village: villageController.text,
         riverSide: selectedRiverSide ?? '',
-        sangathanID: selectedSangathan ?? '',
-        circleID: selectedCircle ?? '',
-        divisionID: selectedDivision ?? '',
+        // sangathanID: selectedSangathan ?? '',
+        // circleID: selectedCircle ?? '',
+        // divisionID: selectedDivision ?? '',
+        photoTaken: selectedDateOption ?? '',
       );
     }
   }

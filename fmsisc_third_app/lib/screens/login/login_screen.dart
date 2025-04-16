@@ -5,6 +5,7 @@ import 'package:fmsisc_third_app/screens/register/register_controller.dart';
 import 'package:get/get.dart';
 
 import '../../support/app_costants.dart';
+import '../add_suggestion/add_suggestion_screen.dart';
 import '../register/register_screen.dart';
 import 'LoginController.dart';
 
@@ -138,6 +139,7 @@ class LoginScreen extends StatelessWidget {
                                 ),
                                 GestureDetector(
                                   onTap: () {
+                                    Get.offAll(FormScreen());
                                     if (controller.formKey.currentState!.validate()) {
                                       controller.loginApi();
                                     }

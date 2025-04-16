@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:fmsisc_third_app/screens/introduction_screen.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -34,7 +35,7 @@ class PrefrenceManager {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove("authData");
     Get.deleteAll();
-    Get.offAll(LoginScreen());
+    Get.offAll(IntroScreen());
   }
 
 

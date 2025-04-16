@@ -41,6 +41,7 @@ class LoginController extends GetxController {
     print(url);
 
     try {
+
       var response = await dio.request(url, options: Options(method: 'GET'));
 
       if (response.statusCode == 200) {
@@ -65,6 +66,7 @@ class LoginController extends GetxController {
             showLongToast(map["message"]);
           }
         } else {
+
           showLongToast("Invalid email or password");
         }
       }
